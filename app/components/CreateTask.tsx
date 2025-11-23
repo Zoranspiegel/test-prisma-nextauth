@@ -12,8 +12,12 @@ export default function CreateTask() {
     formState: { errors, isSubmitting },
   } = useForm<CreateTaskDto>({ resolver: zodResolver(createTaskDto) });
 
-  const submit: SubmitHandler<CreateTaskDto> = (data) => {
-    console.log(data);
+  const submit: SubmitHandler<CreateTaskDto> = async (data) => {
+    const res = await fetch("/api/tasks", { method: "POST", body: JSON.stringify(data) });
+    if (res.ok) {
+      const parsedRes = await res.json();
+      console.log(parsedRes);
+    }
     reset();
   };
 
