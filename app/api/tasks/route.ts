@@ -1,10 +1,10 @@
-import { createTaskDto } from "@/app/models/dto/Task";
+import { createTaskDto } from "@/app/models/dto/TaskDto";
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(): Promise<NextResponse> {
   try {
-    const tasks = await prisma.task.findMany();
+    const tasks = await prisma.task.findMany({ orderBy: { createdAt: "asc" } });
 
     return NextResponse.json(tasks, { status: 200 });
   } catch (error) {

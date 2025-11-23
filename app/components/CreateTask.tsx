@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { createTaskDto, type CreateTaskDto } from "../models/dto/Task";
+import { createTaskDto, type CreateTaskDto } from "../models/dto/TaskDto";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useTasks from "@/hooks/swr/useTasks";
 
@@ -37,7 +37,7 @@ export default function CreateTask() {
       <div className="flex flex-col gap-1">
         <button
           disabled={isSubmitting}
-          className="border py-1 transition hover:bg-foreground hover:text-background disabled:bg-background disabled:border-focus disabled:text-focus"
+          className="border py-1 transition cursor-pointer hover:bg-foreground hover:text-background disabled:bg-background disabled:border-focus disabled:text-focus"
         >
           {isSubmitting ? "Loading..." : "Create"}
         </button>
