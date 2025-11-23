@@ -3,6 +3,7 @@
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { createTaskDto, type CreateTaskDto } from "../models/dto/Task";
 import { zodResolver } from "@hookform/resolvers/zod";
+import useTasks from "@/hooks/swr/useTasks";
 
 export default function CreateTask() {
   const {
@@ -11,12 +12,12 @@ export default function CreateTask() {
     reset,
     formState: { errors, isSubmitting },
   } = useForm<CreateTaskDto>({ resolver: zodResolver(createTaskDto) });
+  const { mutate } = useTasks();
 
   const submit: SubmitHandler<CreateTaskDto> = async (data) => {
     const res = await fetch("/api/tasks", { method: "POST", body: JSON.stringify(data) });
     if (res.ok) {
-      const parsedRes = await res.json();
-      console.log(parsedRes);
+      mutate();
     }
     reset();
   };

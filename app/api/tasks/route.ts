@@ -1,35 +1,11 @@
-import { createTaskDto, Task } from "@/app/models/dto/Task";
+import { createTaskDto } from "@/app/models/dto/Task";
+import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(): Promise<NextResponse> {
   try {
-    const tasks: Task[] = [
-      {
-        id: Math.random().toString(16).slice(2),
-        title: "Play Guitar",
-        description: "Practice one jazz standard",
-        completed: false,
-        createdAt: "",
-        updatedAt: "",
-      },
-      {
-        id: Math.random().toString(16).slice(2),
-        title: "Study Nextjs",
-        description: "Learn how to integrate Next Auth",
-        completed: false,
-        createdAt: "",
-        updatedAt: "",
-      },
-      {
-        id: Math.random().toString(16).slice(2),
-        title: "Water Plants",
-        description: "Water the monstera and the jade",
-        completed: false,
-        createdAt: "",
-        updatedAt: "",
-      },
-    ];
-    
+    const tasks = await prisma.task.findMany();
+
     return NextResponse.json(tasks, { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
@@ -51,7 +27,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const data = zodResponse.data;
 
-    return NextResponse.json({ msg: "Success", data }, { status: 201 });
+    const newTask = await prisma.task.create({ data });
+
+    return NextResponse.json({ msg: "Success", data: newTask }, { status: 201 });
   } catch (error) {
     if (error instanceof Error) {
       console.error(error.stack);

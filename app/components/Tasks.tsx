@@ -10,6 +10,8 @@ export default function Tasks() {
 
   if (error) return <div>ERROR</div>;
 
+  if (tasks.length === 0) return <></>;
+
   return (
     <div className="w-sm flex flex-col gap-4 border-4 border-double p-4">
       {tasks.map((task) => (
