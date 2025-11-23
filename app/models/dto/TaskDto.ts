@@ -5,6 +5,12 @@ export const createTaskDto = z.object({
   description: z.string().min(2, "Description must have at least 2 characters"),
 });
 
+export const updateTaskDto = z.object({
+  title: z.string().optional(),
+  description: z.string().optional(),
+  completed: z.boolean().optional(),
+});
+
 export const taskDto = z.object({
   id: z.string(),
   title: z.string(),
@@ -17,3 +23,5 @@ export const taskDto = z.object({
 export type Task = z.infer<typeof taskDto>;
 
 export type CreateTaskDto = z.infer<typeof createTaskDto>;
+
+export type UpdateTaskDto = z.infer<typeof updateTaskDto>;

@@ -1,4 +1,4 @@
-import { Task } from "@/app/models/dto/Task";
+import { Task } from "@/app/models/dto/TaskDto";
 import { fetcher } from "@/utils/fetcher";
 import useSWR from "swr";
 
