@@ -19,11 +19,24 @@ export default function Task({ task }: { task: Task }) {
 
   return (
     <div className="flex transition select-none cursor-pointer hover:bg-focus">
-      <div className={cn("flex flex-col", task.completed && "line-through text-disabled")} onClick={updateTask}>
+      <div className={cn("w-full flex flex-col", task.completed && "line-through text-disabled")} onClick={updateTask}>
         <h1 className="text-xl font-bold">{task.title}</h1>
+        <p className="text-xs opacity-60">
+          {new Date(task.updatedAt) > new Date(task.createdAt)
+            ? `Modified ${new Date(task.updatedAt).toLocaleString("en-en", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              })}`
+            : `Created ${new Date(task.createdAt).toLocaleString("en-en", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              })}`}
+        </p>
         <p>{task.description}</p>
       </div>
-      <DeleteTaskBtn />
+      <DeleteTaskBtn id={task.id} />
     </div>
   );
 }

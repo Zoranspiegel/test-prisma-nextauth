@@ -31,3 +31,22 @@ export async function PATCH(
     return NextResponse.json({ error: "Unknown server error" }, { status: 500 });
   }
 }
+
+export async function DELETE(
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+): Promise<NextResponse> {
+  const { id } = await params;
+
+  try {
+    const deletedTask = await prisma.task.delete({ where: { id } });
+
+    return NextResponse.json({ msg: "Success", data: deletedTask }, { status: 200 });
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.stack);
+      return NextResponse.json({ error: error.message || "Internal server error" }, { status: 500 });
+    }
+    return NextResponse.json({ error: "Unknown server error" }, { status: 500 });
+  }
+}
